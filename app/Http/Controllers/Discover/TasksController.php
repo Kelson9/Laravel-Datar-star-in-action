@@ -33,8 +33,12 @@ class TasksController extends Controller
 
         $tasks = auth()->user()->tasks()->latest()->get();
 
+        // Use prepend mode to add the new task at the top of the list
         return hyper()
-            ->fragment('tasks', 'task-list', compact('tasks'))
+            ->fragment('tasks.task-item', 'task-item', compact('task'), [
+                'selector' => '#task-list',
+                'mode' => 'prepend'
+            ])
             ->signals([
                 'title' => '',
                 'tasks' => $tasks,
@@ -74,11 +78,14 @@ class TasksController extends Controller
                 'title' => $validated['title'],
             ]);
 
-            // Refresh the tasks list
             $tasks = auth()->user()->tasks()->latest()->get();
 
+            // Use outer mode to morph just this specific task item
             return hyper()
-                ->fragment('tasks', 'task-list', compact('tasks'))
+                ->fragment('tasks.task-item', 'task-item', compact('task'), [
+                    'selector' => '#task-item-' . $task->id,
+                    'mode' => 'outer'
+                ])
                 ->signals([
                     'tasks' => $tasks,
                 ]);
@@ -91,8 +98,12 @@ class TasksController extends Controller
 
         $tasks = auth()->user()->tasks()->latest()->get();
 
+        // Use outer mode to morph just this specific task item
         return hyper()
-            ->fragment('tasks', 'task-list', compact('tasks'))
+            ->fragment('tasks.task-item', 'task-item', compact('task'), [
+                'selector' => '#task-item-' . $task->id,
+                'mode' => 'outer'
+            ])
             ->signals([
                 'tasks' => $tasks,
             ]);
@@ -106,12 +117,14 @@ class TasksController extends Controller
             abort(403);
         }
 
+        $taskId = $task->id;
         $task->delete();
 
         $tasks = auth()->user()->tasks()->latest()->get();
 
+        // Use the remove action to delete the element
         return hyper()
-            ->fragment('tasks', 'task-list', compact('tasks'))
+            ->remove('#task-item-' . $taskId)
             ->signals([
                 'tasks' => $tasks,
             ]);
