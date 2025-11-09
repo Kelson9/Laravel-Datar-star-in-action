@@ -33,11 +33,13 @@ class TasksController extends Controller
 
         $tasks = auth()->user()->tasks()->latest()->get();
 
-        return hyper()->signals([
-            'title' => '',
-            'tasks' => $tasks,
-            'errors' => [],
-        ]);
+        return hyper()
+            ->fragment('tasks', 'task-list', compact('tasks'))
+            ->signals([
+                'title' => '',
+                'tasks' => $tasks,
+                'errors' => [],
+            ]);
     }
 
     #[Route(middleware: 'auth')]
@@ -75,9 +77,11 @@ class TasksController extends Controller
             // Refresh the tasks list
             $tasks = auth()->user()->tasks()->latest()->get();
 
-            return hyper()->signals([
-                'tasks' => $tasks,
-            ]);
+            return hyper()
+                ->fragment('tasks', 'task-list', compact('tasks'))
+                ->signals([
+                    'tasks' => $tasks,
+                ]);
         }
 
         // Toggle completion from checkbox
@@ -87,9 +91,11 @@ class TasksController extends Controller
 
         $tasks = auth()->user()->tasks()->latest()->get();
 
-        return hyper()->signals([
-            'tasks' => $tasks,
-        ]);
+        return hyper()
+            ->fragment('tasks', 'task-list', compact('tasks'))
+            ->signals([
+                'tasks' => $tasks,
+            ]);
     }
 
     #[Route(middleware: 'auth')]
@@ -104,8 +110,10 @@ class TasksController extends Controller
 
         $tasks = auth()->user()->tasks()->latest()->get();
 
-        return hyper()->signals([
-            'tasks' => $tasks,
-        ]);
+        return hyper()
+            ->fragment('tasks', 'task-list', compact('tasks'))
+            ->signals([
+                'tasks' => $tasks,
+            ]);
     }
 }
