@@ -43,6 +43,11 @@ class TasksController extends Controller
                 'title' => '',
                 'tasks' => $tasks,
                 'errors' => [],
+                'alert' => [
+                    'show' => true,
+                    'message' => 'Task "' . $task->title . '" created successfully!',
+                    'type' => 'success'
+                ]
             ]);
     }
 
@@ -88,6 +93,11 @@ class TasksController extends Controller
                 ])
                 ->signals([
                     'tasks' => $tasks,
+                    'alert' => [
+                        'show' => true,
+                        'message' => 'Task updated successfully!',
+                        'type' => 'success'
+                    ]
                 ]);
         }
 
@@ -97,6 +107,10 @@ class TasksController extends Controller
         ]);
 
         $tasks = auth()->user()->tasks()->latest()->get();
+        
+        $message = $task->is_completed 
+            ? 'Task marked as completed!' 
+            : 'Task marked as incomplete!';
 
         // Use outer mode to morph just this specific task item
         return hyper()
@@ -106,6 +120,11 @@ class TasksController extends Controller
             ])
             ->signals([
                 'tasks' => $tasks,
+                'alert' => [
+                    'show' => true,
+                    'message' => $message,
+                    'type' => 'info'
+                ]
             ]);
     }
 
@@ -118,6 +137,7 @@ class TasksController extends Controller
         }
 
         $taskId = $task->id;
+        $taskTitle = $task->title;
         $task->delete();
 
         $tasks = auth()->user()->tasks()->latest()->get();
@@ -127,6 +147,11 @@ class TasksController extends Controller
             ->remove('#task-item-' . $taskId)
             ->signals([
                 'tasks' => $tasks,
+                'alert' => [
+                    'show' => true,
+                    'message' => 'Task "' . $taskTitle . '" deleted successfully!',
+                    'type' => 'success'
+                ]
             ]);
     }
 }
