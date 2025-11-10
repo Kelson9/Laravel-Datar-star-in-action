@@ -1,22 +1,17 @@
 @fragment('task-item')
 <div id="task-item-{{ $task->id }}" class="mb-3">
-    <!-- View Mode -->
     <div data-show="!$['editing_{{ $task->id }}']" class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition">
-        <!-- Checkbox -->
         <input 
             type="checkbox"
             {{ $task->is_completed ? 'checked' : '' }}
             data-on:change="@patchx('/tasks/{{ $task->id }}')"
             class="w-5 h-5 text-sky-500 rounded focus:ring-sky-500 focus:ring-2 cursor-pointer">
         
-        <!-- Task Title -->
         <span 
             style="text-decoration: {{ $task->is_completed ? 'line-through' : 'none' }}"
             class="flex-1">
             {{ $task->title }}
         </span>
-
-        <!-- Edit Button -->
         <button 
             type="button"
             data-on:click="$['editing_{{ $task->id }}'] = true"
@@ -26,7 +21,6 @@
             </svg>
         </button>
 
-        <!-- Delete Button -->
         <button 
             type="button"
             data-on:click="@deletex('/tasks/{{ $task->id }}')"
@@ -37,12 +31,10 @@
         </button>
     </div>
 
-    <!-- Edit Mode -->
     <div 
         data-show="$['editing_{{ $task->id }}']"
         class="flex items-center gap-3 p-3 border-2 border-sky-500 rounded-lg bg-sky-50 transition">
         
-        <!-- Edit Input -->
         <input 
             type="text"
             id="edit-input-{{ $task->id }}"
@@ -50,7 +42,6 @@
             autofocus
             class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent">
         
-        <!-- Save Button (checkmark icon) -->
         <button 
             type="button"
             data-on:click="$title = document.getElementById('edit-input-{{ $task->id }}').value; @patchx('/tasks/{{ $task->id }}').then(() => { $['editing_{{ $task->id }}'] = false; $title = '' })"
@@ -60,7 +51,6 @@
             </svg>
         </button>
 
-        <!-- Cancel Button (X icon) -->
         <button 
             type="button"
             data-on:click="$['editing_{{ $task->id }}'] = false"

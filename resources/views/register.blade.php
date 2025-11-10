@@ -37,7 +37,6 @@
                     <div data-error="email" class="text-red-500 text-xs mt-1"></div>
                 </div>
 
-                <!-- Password Field -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
                         Password
@@ -75,7 +74,6 @@
                     <div data-error="password" class="text-red-500 text-xs mt-1"></div>
                 </div>
 
-                <!-- Confirm Password Field -->
                 <div>
                     <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-2">
                         Confirm Password

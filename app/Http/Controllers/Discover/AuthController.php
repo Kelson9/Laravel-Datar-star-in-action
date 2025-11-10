@@ -53,7 +53,6 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // Attempt authentication
         if (!\Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']])) {
             return hyper()->signals([
                 'errors' => [
@@ -62,10 +61,8 @@ class AuthController extends Controller
             ]);
         }
 
-        // Regenerate session to prevent fixation attacks
         request()->session()->regenerate();
 
-        // Redirect to tasks page
         return hyper()
             ->navigate(route('tasks'))
             ->signals([

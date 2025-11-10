@@ -6,16 +6,13 @@
         
         <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Sign In</h2>
 
-        <!-- Login Form -->
         <div data-signals="{showPassword: false, successMessage: ''}">
             
-            <!-- Success Message -->
             <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm" data-show="$successMessage">
                 <span data-text="$successMessage"></span>
             </div>
 
             <form class="space-y-6" data-on:submit__prevent="@postx('{{ route('auth.login') }}')">
-                <!-- Email Field -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
                         Email Address
@@ -30,7 +27,6 @@
                     <div data-error="email" class="text-red-500 text-xs mt-1"></div>
                 </div>
 
-                <!-- Password Field -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
                         Password
@@ -44,7 +40,6 @@
                             placeholder="Enter your password" 
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent pr-12">
                         
-                        <!-- Eye Icon - Show Password -->
                         <button 
                             type="button"
                             data-on:click="$showPassword = !$showPassword"
