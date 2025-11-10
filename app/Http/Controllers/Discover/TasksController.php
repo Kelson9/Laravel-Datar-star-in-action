@@ -15,8 +15,7 @@ class TasksController extends Controller
         $tasks = auth()->user()->tasks()->latest()->get();
         
         return hyper()
-            ->view('tasks', ['tasks' => $tasks])
-            ->web(view('tasks', compact('tasks')));
+            ->view('tasks', ['tasks' => $tasks],web:true);
     }
 
     #[Route(middleware: 'auth')]
@@ -34,7 +33,7 @@ class TasksController extends Controller
         $tasks = auth()->user()->tasks()->latest()->get();
 
         return hyper()
-            ->fragment('tasks.task-item', 'task-item', compact('task'), [
+            ->fragment('tasks', 'task-item', compact('task'), [
                 'selector' => '#task-list',
                 'mode' => 'prepend'
             ])
@@ -48,18 +47,6 @@ class TasksController extends Controller
                     'type' => 'success'
                 ]
             ]);
-    }
-
-    #[Route(middleware: 'auth')]
-    public function edit(Task $task)
-    {
-        if ($task->user_id !== auth()->id()) {
-            abort(403);
-        }
-
-        return response()
-            ->view('partials.task-edit-form', compact('task'))
-            ->header('Content-Type', 'text/html');
     }
 
     #[Route(middleware: 'auth')]

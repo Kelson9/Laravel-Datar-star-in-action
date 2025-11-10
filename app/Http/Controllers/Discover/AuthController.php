@@ -5,7 +5,7 @@ use  App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use Dancycodes\Hyper\Routing\Route;
+use Dancycodes\Hyper\Routing\Attributes\Route;
 
 
 #[Route(middleware: 'web')]
@@ -13,7 +13,9 @@ class AuthController extends Controller
 {
     public function loginView()
     {
-        return hyper()->view('login')->web(view('login'));
+        return hyper()
+        ->forget()
+        ->view('login', web:true);
     }
 
     public function registerView()
@@ -21,8 +23,8 @@ class AuthController extends Controller
        return hyper()->view('register')->web(view('register'));
     }
 
-    #[Route(method: ['get', 'post'])]
-    public function store()
+    #[Route(method: 'post')]
+    public function register()
     {
         $validated = signals()->validate([
             'name' => 'required|string|max:255',
@@ -38,6 +40,7 @@ class AuthController extends Controller
         ]);
 
         return hyper()
+            ->forget()
             ->navigate(route('auth.login-view'))
             ->signals([
                 'successMessage' => 'Account created successfully! Please login.',
@@ -47,7 +50,6 @@ class AuthController extends Controller
     #[Route(method: ['get', 'post'])]
     public function login()
     {
-        // Validate credentials
         $validated = signals()->validate([
             'email' => 'required|email',
             'password' => 'required',

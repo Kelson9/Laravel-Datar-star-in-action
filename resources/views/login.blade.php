@@ -19,7 +19,7 @@
                     </label>
                     <input 
                         type="email" 
-                        id="email"
+                        id="login_email"
                         name="email"
                         data-bind="email"
                         placeholder="Enter your email" 
@@ -34,7 +34,7 @@
                     <div class="relative">
                         <input 
                             data-attr:type="$showPassword ? 'text' : 'password'"
-                            id="password"
+                            id="login_password"
                             name="password"
                             data-bind="password"
                             placeholder="Enter your password" 

@@ -8,7 +8,7 @@
 
         <div data-signals="{showPassword: false, showConfirmPassword: false}">
             
-            <form class="space-y-6" data-on:submit__prevent="@postx('{{ route('auth.store') }}')">
+            <form class="space-y-6" data-on:submit__prevent="@postx('{{ route('auth.register') }}')">
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
                         Full Name
@@ -29,7 +29,7 @@
                     </label>
                     <input 
                         type="email" 
-                        id="email"
+                        id="register_email"
                         name="email"
                         data-bind="email"
                         placeholder="Enter your email" 
@@ -44,7 +44,7 @@
                     <div class="relative">
                         <input 
                             data-attr:type="$showPassword ? 'text' : 'password'"
-                            id="password"
+                            id="register_password"
                             name="password"
                             data-bind="password"
                             placeholder="Enter your password" 
